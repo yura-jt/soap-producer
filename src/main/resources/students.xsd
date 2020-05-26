@@ -41,7 +41,6 @@
 
     <xs:complexType name="studentSoapDto">
         <xs:sequence>
-            <xs:element name="id" type="xs:long"/>
             <xs:element name="firstName" type="xs:string"/>
             <xs:element name="lastName" type="xs:string"/>
             <xs:element name="email" type="xs:string"/>
