@@ -28,9 +28,6 @@ public class StudentDto {
     private String email;
 
     @NonNull
-    private String phoneNumber;
-
-    @NonNull
     private Integer age;
 
     @NonNull

@@ -9,7 +9,6 @@ import com.soap.producer.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -21,7 +20,6 @@ public class StudentServiceImpl implements StudentService {
     private final StudentDtoMapper studentDtoMapper;
 
     @Override
-    @Transactional(readOnly = true)
     public Student getById(Long id) {
         Optional<Student> optionalStudent = studentRepository.findById(id);
         if (!optionalStudent.isPresent()) {

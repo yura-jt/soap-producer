@@ -34,10 +34,6 @@ public class Student {
     private String email;
 
     @NotNull
-    @Column(name = "phone_number", nullable = false)
-    private String phoneNumber;
-
-    @NotNull
     @Column(name = "age", nullable = false)
     private Integer age;
 

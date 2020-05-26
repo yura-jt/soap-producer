@@ -4,7 +4,7 @@ import com.soap.producer.dto.StudentDto;
 import com.soap.producer.entity.Student;
 import com.soap.producer.mapper.StudentDtoMapper;
 import com.soap.producer.service.StudentService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -18,7 +18,6 @@ import producer.soap.ServiceStatus;
 import producer.soap.StudentSoapDto;
 
 @Endpoint
-@RequiredArgsConstructor
 public class StudentEndpoint {
     private static final String NAMESPACE_URI = "http://soap.producer";
     private static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
@@ -26,12 +25,18 @@ public class StudentEndpoint {
     private StudentService studentService;
     private StudentDtoMapper studentDtoMapper;
 
+    @Autowired
+    public StudentEndpoint(StudentService studentService, StudentDtoMapper studentDtoMapper) {
+        this.studentService = studentService;
+        this.studentDtoMapper = studentDtoMapper;
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getStudentRequest")
     @ResponsePayload
     public GetStudentResponse getStudent(@RequestPayload GetStudentRequest request) {
         GetStudentResponse response = OBJECT_FACTORY.createGetStudentResponse();
-
-        Student student = studentService.getById(request.getId());
+        Long id = request.getId();
+        Student student = studentService.getById(id);
         StudentSoapDto studentDto = studentDtoMapper.toStudentSoapDto(student);
         response.setStudent(studentDto);
 
@@ -60,7 +65,6 @@ public class StudentEndpoint {
         response.setStudent(student);
         response.setServiceStatus(serviceStatus);
         return response;
-
     }
 
 }
